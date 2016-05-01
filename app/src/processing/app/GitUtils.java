@@ -205,7 +205,7 @@ public class GitUtils {
     }
   }
   
-  public static void push(){
+  /*public static void push(){
     if (isRepositoryOpen()) {
       LoginPasswordOkCancelDialog loginPasswordOkCancelDialog = new LoginPasswordOkCancelDialog(null, true);
       loginPasswordOkCancelDialog.setLocationRelativeTo(null);
@@ -222,6 +222,30 @@ public class GitUtils {
       .setPushAll();
       }
     }
+  }*/
+  
+  public static void push(){ 
+    if (isRepositoryOpen()) { 
+      LoginPasswordOkCancelDialog loginPasswordOkCancelDialog = new LoginPasswordOkCancelDialog(null, true); 
+      loginPasswordOkCancelDialog.setLocationRelativeTo(null); 
+      loginPasswordOkCancelDialog.setVisible(true); 
+
+      String login = loginPasswordOkCancelDialog.getLogin(); 
+      String password = loginPasswordOkCancelDialog.getPassword(); 
+
+      if (login != null && !login.isEmpty() && password != null && !password.isEmpty()) { 
+        try { 
+          git 
+          .push() 
+          .setCredentialsProvider(new UsernamePasswordCredentialsProvider(login, password)) 
+          .setForce(true) 
+          .setPushAll().call(); 
+        } catch (Exception e) { 
+          // TODO Auto-generated catch block 
+          e.printStackTrace(); 
+        } 
+      } 
+    } 
   }
   
   public static void closeRepository() {
